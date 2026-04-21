@@ -49,9 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmartAssets();
 
     let isMusicPlaying = false;
-    let isVideoPlaying = false;
 
     // --- Interactive Logic ---
+
+    // Update music volume based on video state
+    function updateMusicVolume() {
+        const isAnyVideoPlaying = (!introVideo.paused && !introVideo.ended) || (!mainVideo.paused && !mainVideo.ended);
+        bgMusic.volume = isAnyVideoPlaying ? 0.15 : 1.0;
+    }
+
+    // Sync volume when videos play/pause
+    [introVideo, mainVideo].forEach(vid => {
+        vid.addEventListener('play', updateMusicVolume);
+        vid.addEventListener('pause', updateMusicVolume);
+        vid.addEventListener('volumechange', updateMusicVolume);
+    });
 
     // Envelope Click
     coverContainer.addEventListener('click', async () => {
@@ -59,8 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         videoWrapper.classList.add('visible');
 
         try {
-            await introVideo.play();
+            // Start both, browser should allow after click
             playMusic();
+            await introVideo.play();
             mainVideo.load();
         } catch (error) { console.error("Play error:", error); }
     });
@@ -75,12 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
     videoToggle.addEventListener('click', () => {
         if (mainVideo.paused) {
             mainVideo.play();
-            isVideoPlaying = true;
             vPlayIcon.style.display = 'none';
             vPauseIcon.style.display = 'block';
         } else {
             mainVideo.pause();
-            isVideoPlaying = false;
             vPlayIcon.style.display = 'block';
             vPauseIcon.style.display = 'none';
         }
@@ -92,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Audio & Transitions
     function playMusic() {
-        bgMusic.volume = (introVideo.paused && mainVideo.paused) ? 1.0 : 0.15;
+        updateMusicVolume();
         bgMusic.play().then(() => {
             isMusicPlaying = true;
             playIcon.style.display = 'none';
@@ -112,12 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         newVid.style.display = 'block';
         requestFullScreen(newVid);
         newVid.play().then(() => {
-            isVideoPlaying = true;
             vPlayIcon.style.display = 'none';
             vPauseIcon.style.display = 'block';
             setTimeout(() => { greetingCard.style.opacity = '1'; }, 5000);
         }).catch(() => {
-            isVideoPlaying = false;
             vPlayIcon.style.display = 'block';
             vPauseIcon.style.display = 'none';
             console.log("Video fail");
