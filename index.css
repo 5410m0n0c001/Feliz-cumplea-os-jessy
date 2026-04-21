@@ -198,8 +198,8 @@ video {
     }
 
     .floating-controls {
-        position: fixed;
-        bottom: 20px;
+        position: absolute;
+        bottom: 5vh; /* Fixed at bottom of viewport */
         left: 0;
         width: 100%;
         flex-direction: row;
