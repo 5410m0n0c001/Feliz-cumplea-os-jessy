@@ -192,9 +192,42 @@ video {
 
 /* Mobile Adjustments */
 @media (max-width: 600px) {
+    body, #app {
+        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    #app {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 40px 10px;
+    }
+
+    #cover-container {
+        position: relative;
+        margin-top: 20vh;
+    }
+
     #video-wrapper {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
         width: 100%;
+        margin-bottom: 30px;
         border-width: 6px;
+    }
+
+    .floating-controls {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+        padding-bottom: 40px;
     }
 
     #greeting-card h2 {
