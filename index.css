@@ -64,16 +64,19 @@ body {
 
 .instruction {
     position: absolute;
-    bottom: 15%;
+    top: 55%; /* Slightly below true center to look balanced on the envelope */
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 0.9rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
     color: var(--gold);
     animation: pulse 2s infinite ease-in-out;
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     pointer-events: none;
     z-index: 5;
+    white-space: nowrap;
 }
 
 @keyframes pulse {
