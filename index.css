@@ -63,14 +63,17 @@ body {
 }
 
 .instruction {
-    margin-top: 2rem;
+    position: absolute;
+    bottom: 15%;
     font-size: 0.9rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
     color: var(--gold);
     animation: pulse 2s infinite ease-in-out;
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: 5;
 }
 
 @keyframes pulse {
